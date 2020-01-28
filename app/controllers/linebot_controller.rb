@@ -13,17 +13,7 @@ class LinebotController < ApplicationController
     array2 = ["がんば！","飲んで飲んで飲んで！","いってらっしゃーい！","いい波のってんねぇ！","もう一回まわすドン！"]
 
     events.each do |event|
-      # case event
-      # when Line::Bot::Event::Message
-      #   case event.type
-      #   when Line::Bot::Event::MessageType::Text
-      #     message = {
-      #       type: 'text',
-      #       text: "#{event.message['text']}ちゃん！おめでとう！\nテキーラ#{p array1[rand(5)]}杯です！\n#{p array2[rand(5)]}"
-      #     }
-      #   end
-      # end
-      # client.reply_message(event['replyToken'], message)
+      
 
       if event.message['text'] != nil
         place = event.message['text'] #ここでLINEで送った文章を取得
@@ -66,7 +56,7 @@ class LinebotController < ApplicationController
         end
 
       end
-
+    
     end
     head :ok
   end
