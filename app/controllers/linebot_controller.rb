@@ -17,7 +17,7 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: "#{event.message['text']}さん、\nテキーラ#{p array[rand(1)]}杯です"
+            text: "#{event.message['text']}さん、\nテキーラ#{p array[rand(3)]}杯です"
           }
         end
       end
