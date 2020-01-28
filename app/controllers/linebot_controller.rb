@@ -1,6 +1,12 @@
 class LinebotController < ApplicationController
   require 'line/bot'
   protect_from_forgery :except => [:callback]
+  def client
+    @client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    }
+  end
   def callback
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -64,10 +70,5 @@ class LinebotController < ApplicationController
 private
 
 # LINE Developers登録完了後に作成される環境変数の認証
-  def client
-    @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-    }
-  end
+  
 end
