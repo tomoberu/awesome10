@@ -8,8 +8,8 @@ class LinebotController < ApplicationController
       error 400 do 'Bad Request' end
     end
     events = client.parse_events_from(body)
-    array = [1,2,3,4,5]
-
+    array1 = [1,2,3,4,5]
+    array2 = ["---","---","---","---","もう一回入力"]
     events.each do |event|
       case event
       when Line::Bot::Event::Message
@@ -17,7 +17,7 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: "#{event.message['text']}さん、\nテキーラ#{p array[rand(5)]}杯です"
+            text: "#{event.message['text']}さん、\nテキーラ#{p array1[rand(5)]}杯です。\n#{p array2[rand(5)]}"
           }
         end
       end
