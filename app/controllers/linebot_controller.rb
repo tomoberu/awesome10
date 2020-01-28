@@ -36,7 +36,7 @@ class LinebotController < ApplicationController
       end
 
       hash_result = JSON.parse result #レスポンスが文字列なのでhashにパースする
-      if hash_result = "category_l_code": "RSFST10000"
+      if hash_result = "#{"category_l_code": "RSFST10000"}"
         shop = hash_result.fetch("rest").sample #任意のものを一個選ぶ
       else
         "存在しません"
