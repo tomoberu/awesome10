@@ -25,14 +25,14 @@ class LinebotController < ApplicationController
         end
       end
       client.reply_message(event['replyToken'], message)
-
+      gkey = ENV["GURUNAVI_KEY"]
       if event.message['text'] != nil
         place = event.message['text'] #ここでLINEで送った文章を取得
-        result = `curl -X GET "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=b42b967e2df0a454f2fbe4da8e1321e1&address=#{place}"`#ここでぐるなびAPIを叩く
+        result = `curl -X GET "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=#{gkey}=&address=#{place}"`#ここでぐるなびAPIを叩く
       else
         latitude = event.message['latitude']
         longitude = event.message['longitude']
-        result = `curl -X GET "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=b42b967e2df0a454f2fbe4da8e1321e1&latitude=#{latitude}&longitude=#{longitude}"`#ここでぐるなびAPIを叩く
+        result = `curl -X GET "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=#{gkey}=&latitude=#{latitude}&longitude=#{longitude}"`#ここでぐるなびAPIを叩く
       end
 
       hash_result = JSON.parse result #レスポンスが文字列なのでhashにパースする
