@@ -36,8 +36,13 @@ class LinebotController < ApplicationController
       end
 
       hash_result = JSON.parse result #レスポンスが文字列なのでhashにパースする
-      shops = hash_result.fetch("rest").sample #任意のものを一個選ぶ
-      shop = shops.fetch("category_name_l"=>["居酒屋", ""])
+      if hash_result == "category_name_l"=>["居酒屋", ""]
+        shop = hash_result.fetch("rest").sample #任意のものを一個選ぶ
+      else
+        message = {
+            type: 'text',
+            text: "存在しません"
+          }
       #店の情報
       url = shop["url_mobile"] #サイトのURLを送る
       shop_name = shop["name"] #店の名前
