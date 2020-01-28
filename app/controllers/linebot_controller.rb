@@ -9,7 +9,7 @@ class LinebotController < ApplicationController
     end
     events = client.parse_events_from(body)
     array1 = [1,2,3,4,5]
-    array2 = ["---","---","---","---","もう一回入力"]
+    array2 = ["がんば！","飲んで飲んで飲んで！","いってらっしゃーい！","いい波のってんねぇ！","もう一回まわすドン！"]
     events.each do |event|
       case event
       when Line::Bot::Event::Message
