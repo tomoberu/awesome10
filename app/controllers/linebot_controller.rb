@@ -1,12 +1,6 @@
 class LinebotController < ApplicationController
   require 'line/bot'
   protect_from_forgery :except => [:callback]
-  def client
-    @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-    }
-  end
   def callback
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -17,9 +11,19 @@ class LinebotController < ApplicationController
 
     array1 = [1,2,3,4,5]
     array2 = ["がんば！","飲んで飲んで飲んで！","いってらっしゃーい！","いい波のってんねぇ！","もう一回まわすドン！"]
-
+    
     events.each do |event|
-      
+      case event
+      when Line::Bot::Event::Message
+        case event.type
+        when Line::Bot::Event::MessageType::Text
+          message = {
+            type: 'text',
+            text: "#{event.message['text']}ちゃん！おめでとう！\nテキーラ#{p array1[rand(5)]}杯です！\n#{p array2[rand(5)]}"
+          }
+        end
+      end
+      client.reply_message(event['replyToken'], message)
 
       if event.message['text'] != nil
         place = event.message['text'] #ここでLINEで送った文章を取得
@@ -62,7 +66,7 @@ class LinebotController < ApplicationController
         end
 
       end
-    
+
     end
     head :ok
   end
@@ -70,5 +74,10 @@ class LinebotController < ApplicationController
 private
 
 # LINE Developers登録完了後に作成される環境変数の認証
-  
+  def client
+    @client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    }
+  end
 end
