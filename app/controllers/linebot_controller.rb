@@ -11,6 +11,7 @@ class LinebotController < ApplicationController
 
     array1 = [1,2,3,4,5]
     array2 = ["がんば！","飲んで飲んで飲んで！","いってらっしゃーい！","いい波のってんねぇ！","もう一回まわすドン！"]
+    array3 = ["テキーラ","ウォッカ","ワイン","日本酒"]
     
     events.each do |event|
       case event
@@ -19,7 +20,7 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: "#{event.message['text']}ちゃん！おめでとう！\nテキーラ#{p array1[rand(5)]}杯です！\n#{p array2[rand(5)]}"
+            text: "#{event.message['text']}ちゃん！おめでとう！\n#{p array3[rand(4)]}#{p array1[rand(5)]}杯です！\n#{p array2[rand(5)]}"
           }
         end
       end
@@ -27,7 +28,7 @@ class LinebotController < ApplicationController
 
       if event.message['text'] != nil
         place = event.message['text'] #ここでLINEで送った文章を取得
-        result = `curl -X GET "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=b42b967e2df0a454f2fbe4da8e1321e1&address=#{place}"`#ここでぐるなびAPIを叩く
+        result = `curl -X GET "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=b42b967e2df0a454f2fbe4da8e1321e1&address=東京都"`#ここでぐるなびAPIを叩く
       else
         latitude = event.message['latitude']
         longitude = event.message['longitude']
@@ -35,7 +36,7 @@ class LinebotController < ApplicationController
       end
 
       hash_result = JSON.parse result #レスポンスが文字列なのでhashにパースする
-      shop = hash_result #任意のものを一個選ぶ
+      shop = hash_result.fetch("rest").sample #任意のものを一個選ぶ
 
       #店の情報
       url = shop["url_mobile"] #サイトのURLを送る
