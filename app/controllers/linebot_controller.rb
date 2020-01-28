@@ -10,7 +10,7 @@ class LinebotController < ApplicationController
     events = client.parse_events_from(body)
 
     array1 = [1,2,3,4,5]
-    array2 = ["がんば！","飲んで飲んで飲んで！","いってらっしゃーい！","いい波のってんねぇ！","もう一回まわすドン！"]
+    array2 = ["がんば！","飲んで飲んで飲んで！","いってらっしゃーい！⤴︎⤴︎","いい波のってんねぇ！","もう一回！もう一回！"]
     array3 = ["テキーラ","ウォッカ","ワイン","日本酒"]
     
     events.each do |event|
@@ -36,7 +36,11 @@ class LinebotController < ApplicationController
       end
 
       hash_result = JSON.parse result #レスポンスが文字列なのでhashにパースする
-      shop = hash_result.fetch("rest").sample #任意のものを一個選ぶ
+      if hash_result = "category_l_code": "RSFST10000"
+        shop = hash_result.fetch("rest").sample #任意のものを一個選ぶ
+      else
+        "存在しません"
+      end
       #店の情報
       url = shop["url_mobile"] #サイトのURLを送る
       shop_name = shop["name"] #店の名前
