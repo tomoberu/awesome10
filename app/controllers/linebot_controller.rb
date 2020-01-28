@@ -16,7 +16,7 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: event.message['text']
+            text: "'text'さんテキーラ１杯飲んでください"
           }
         end
       end
