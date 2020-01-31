@@ -52,7 +52,7 @@ class LinebotController < ApplicationController
         holiday = ""
       end
 
-      response = "【店名】" + shop_name + "\n" + "【カテゴリー】" + category + "\n" + "【営業時間と定休日】" + open_time + "\n" + holiday + "\n" + url
+      response = "《今日のオススメ！》" + "\n" + "\n" + "【店名】" + shop_name + "\n" + "【カテゴリー】" + category + "\n" + "【営業時間と定休日】" + open_time + "\n" + holiday + "\n" + url
        case event #case文　caseの値がwhenと一致する時にwhenの中の文章が実行される(switch文みたいなもの)
       when Line::Bot::Event::Message
         case event.type
