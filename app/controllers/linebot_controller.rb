@@ -10,7 +10,7 @@ class LinebotController < ApplicationController
     events = client.parse_events_from(body)
 
     array1 = [1,2,3,4,5]
-    array2 = ["がんば！","飲んで飲んで飲んで！","いってらっしゃーい！⤴︎⤴︎","いい波のってんねぇ！","もう一回！もう一回！"]
+    array2 = ["がんば！！！","飲んで飲んで飲んで！","いってらっしゃーい！⤴︎⤴︎","いい波のってんねぇ！","もう一回！もう一回！"]
     array3 = ["テキーラ","ウォッカ","ワイン","日本酒"]
     
     events.each do |event|
@@ -20,7 +20,7 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: "#{event.message['text']}ちゃん、おめでとう！😆😆\n#{p array3[rand(4)]}#{p array1[rand(5)]}杯やで！😜\n#{p array2[rand(5)]}"
+            text: "#{event.message['text']}ちゃん、おめでとう！\n😆😆😆\n#{p array3[rand(4)]}#{p array1[rand(5)]}杯やで！😜\n#{p array2[rand(5)]}"
           }
         end
       end
